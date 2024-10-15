@@ -1,5 +1,5 @@
 {
-  "project": [
+  "projects": [
     {
       "id": "1",
       "title": "Project Title 1",
@@ -13,9 +13,9 @@
       "complete": false
     },
     {
-      "id": "3",
-      "title": "Project Title 3",
-      "details": "Project Details 3",
+      "id": "be60",
+      "title": "test",
+      "details": "test details",
       "complete": false
     }
   ]

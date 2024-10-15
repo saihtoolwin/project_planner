@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <h1>Home</h1>
     <div v-for="project in projects" :key="project.id">
      <SingleProject :project="project" @delete="removeProject" @complete="completeProject"></SingleProject>
     </div>
@@ -20,7 +19,7 @@ export default {
     }
   },
   mounted() {
-     fetch('http://localhost:3000/project').then((response)=>{
+     fetch('http://localhost:3000/projects').then((response)=>{
       // console.log(response.json());
       return response.json();
     }).then((data)=>{
