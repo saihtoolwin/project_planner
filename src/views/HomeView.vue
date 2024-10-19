@@ -1,39 +1,68 @@
 <template>
   <div class="home">
-    <div v-for="project in projects" :key="project.id">
-     <SingleProject :project="project" @delete="removeProject" @complete="completeProject"></SingleProject>
+    <FilterNav
+      @filterValue="currentValue = $event"
+      :currentValue="currentValue"
+    ></FilterNav>
+    <div v-for="project in filterProjects" :key="project.id">
+      <SingleProject
+        :project="project"
+        @delete="removeProject"
+        @complete="completeProject"
+      ></SingleProject>
     </div>
   </div>
 </template>
 
 <script>
-import SingleProject from '@/components/SingleProject.vue';
+import FilterNav from "@/components/FilterNav.vue";
+import SingleProject from "@/components/SingleProject.vue";
 export default {
-  name: 'HomeView',
+  name: "HomeView",
   components: {
-    SingleProject
+    SingleProject,
+    FilterNav,
   },
-  data(){
+  data() {
     return {
-      projects:[],
-    }
+      projects: [],
+      currentValue: "all",
+    };
   },
   mounted() {
-     fetch('http://localhost:3000/projects').then((response)=>{
-      // console.log(response.json());
-      return response.json();
-    }).then((data)=>{
-      this.projects=data;
-    })
+    fetch("http://localhost:3000/projects")
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        this.projects = data;
+      });
   },
-  methods:{
-    removeProject(id){
-      this.projects = this.projects.filter(project => project.id !== id);
+  computed: {
+    filterProjects() {
+      if (this.currentValue === "complete") {
+        return this.projects.filter((project) => {
+          return project.complete;
+        });
+      }
+
+      if (this.currentValue === "onGoing") {
+        return this.projects.filter((project) => {
+          return !project.complete;
+        });
+      }
+
+      return this.projects;
     },
-    completeProject(id){
-      let findProject = this.projects.find(project => project.id == id);
-      findProject.complete =! findProject.complete;
-    }
-  }
-}
+  },
+  methods: {
+    removeProject(id) {
+      this.projects = this.projects.filter((project) => project.id !== id);
+    },
+    completeProject(id) {
+      let findProject = this.projects.find((project) => project.id == id);
+      findProject.complete = !findProject.complete;
+    },
+  },
+};
 </script>

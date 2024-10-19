@@ -2,8 +2,8 @@
   "projects": [
     {
       "id": "1",
-      "title": "Project Title 1",
-      "details": "Project Details 1",
+      "title": "Project Title 12",
+      "details": "Project Details 12",
       "complete": false
     },
     {
@@ -16,6 +16,12 @@
       "id": "be60",
       "title": "test",
       "details": "test details",
+      "complete": false
+    },
+    {
+      "id": "12d8",
+      "title": "hello",
+      "details": "dasfdsfsdfdsa",
       "complete": false
     }
   ]

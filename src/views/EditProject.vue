@@ -1,7 +1,7 @@
 <template>
   <div class="w-full max-w-lg mx-auto mt-10">
     <form
-      @submit.prevent="addProject"
+      @submit.prevent="updateProject"
       class="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4"
     >
       <h1 class="text-2xl font-bold text-gray-800 mb-6">
@@ -54,17 +54,35 @@ export default {
     };
   },
   mounted() {
-    const projectId = this.$route.params.id;  
+    const projectId = this.$route.params.id;
     fetch(`http://localhost:3000/projects/${projectId}`)
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        this.title=data.title;
-        this.details=data.details
-      }).catch((error) => {
-      console.error("Fetch error:", error);
-    });;
+        this.title = data.title;
+        this.details = data.details;
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error);
+      });
+  },
+  methods: {
+    updateProject() {
+      fetch(`http://localhost:3000/projects/${this.$route.params.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: this.title,
+          details: this.details,
+          complete: false,
+        }),
+      }).then(()=>{
+        this.$router.push({name:'home'})
+      });
+    },
   },
 };
 </script>
